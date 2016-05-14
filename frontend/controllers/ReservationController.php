@@ -8,6 +8,7 @@ use common\models\ReservationSearch;
 use common\models\Room;
 use Yii;
 use yii\web\Controller;
+use common\models\Customer;
 
 class ReservationController extends Controller
 {
@@ -188,8 +189,8 @@ class ReservationController extends Controller
 
     public function actionCreateCustomerAndReservation()
     {
-        $customer = new \app\models\Customer();
-        $reservation = new \app\models\Reservation();
+        $customer = new Customer();
+        $reservation = new Reservation();
 
         // It is useful to set fake customer_id to reservation model to avoid validation error (because customer_id is mandatory)
         $reservation->customer_id = 0;
@@ -223,8 +224,7 @@ class ReservationController extends Controller
         }
 
 
-        return $this->render('createCustomerAndReservation', ['customer' => $customer, 'reservation' => $reservation]);
+        return $this->render('createCustomerAndReservation',
+            ['customer' => $customer, 'reservation' => $reservation]);
     }
-
-}
 }
