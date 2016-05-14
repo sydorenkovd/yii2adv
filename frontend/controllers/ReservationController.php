@@ -17,9 +17,8 @@ class ReservationController extends Controller
 
         $searchModel = new ReservationSearch();
 
-        if(isset($_GET['ReservationSearch']))
-        {
-            $searchModel->load( Yii::$app->request->get() );
+        if (isset($_GET['ReservationSearch'])) {
+            $searchModel->load(Yii::$app->request->get());
 
             $query->joinWith(['customer']);
             $query->andFilterWhere(
@@ -45,10 +44,11 @@ class ReservationController extends Controller
         ]);
 
         return $this->render('index',
-            [ 'dataProvider' => $dataProvider,
+            ['dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'resultQueryAveragePricePerDay' => $resultQueryAveragePricePerDay ]);
+                'resultQueryAveragePricePerDay' => $resultQueryAveragePricePerDay]);
     }
+
     public function actionMultiplegrid()
     {
         /**
@@ -57,9 +57,8 @@ class ReservationController extends Controller
         $reservationsQuery = Reservation::find();
         $reservationsSearchModel = new ReservationSearch();
 
-        if(isset($_GET['ReservationSearch']))
-        {
-            $reservationsSearchModel->load( Yii::$app->request->get() );
+        if (isset($_GET['ReservationSearch'])) {
+            $reservationsSearchModel->load(Yii::$app->request->get());
 
             $reservationsQuery->joinWith(['customer']);
             $reservationsQuery->andFilterWhere(
@@ -93,9 +92,8 @@ class ReservationController extends Controller
         $roomsQuery = Room::find();
         $roomsSearchModel = new Room();
 
-        if(isset($_GET['Room']))
-        {
-            $roomsSearchModel->load( Yii::$app->request->get() );
+        if (isset($_GET['Room'])) {
+            $roomsSearchModel->load(Yii::$app->request->get());
 
             $roomsQuery->andFilterWhere([
                 'id' => $roomsSearchModel->id,
@@ -127,8 +125,106 @@ class ReservationController extends Controller
         ]);
 
     }
-    public function actionThreeColumns(){
+
+    public function actionThreeColumns()
+    {
         return $this->render('three-columns');
     }
 
+    public function actionDetailDependentDropdown()
+    {
+        $showDetail = false;
+
+        $model = new Reservation();
+
+        if (isset($_POST['Reservation'])) {
+            $model->load(Yii::$app->request->post());
+
+            if (isset($_POST['Reservation']['id']) && ($_POST['Reservation']['id'] != null)) {
+                $model = Reservation::findOne($_POST['Reservation']['id']);
+                $showDetail = true;
+            }
+        }
+
+
+        return $this->render('detailDependentDropdown', ['model' => $model, 'showDetail' => $showDetail]);
+    }
+
+    /*
+    public function actionDetailPjax()
+    {
+        $showDetail = false;
+
+        $model = new Reservation();
+
+        if(isset($_POST['Reservation']))
+        {
+            $model->load( Yii::$app->request->post() );
+
+            if(isset($_POST['Reservation']['id'])&&($_POST['Reservation']['id']!=null))
+            {
+                $model = Reservation::findOne($_POST['Reservation']['id']);
+                $showDetail = true;
+            }
+        }
+
+
+        return $this->render('detailPjax', [ 'model' => $model, 'showDetail' => $showDetail ]);
+    }
+    */
+
+    public function actionAjaxDropDownListByCustomerId($customer_id)
+    {
+        $output = '';
+
+        $items = Reservation::findAll(['customer_id' => $customer_id]);
+        foreach ($items as $item) {
+            $content = sprintf('reservation #%s at %s', $item->id, date('Y-m-d H:i:s', strtotime($item->reservation_date)));
+            $output .= \yii\helpers\Html::tag('option', $content, ['value' => $item->id]);
+        }
+
+        return $output;
+    }
+
+    public function actionCreateCustomerAndReservation()
+    {
+        $customer = new \app\models\Customer();
+        $reservation = new \app\models\Reservation();
+
+        // It is useful to set fake customer_id to reservation model to avoid validation error (because customer_id is mandatory)
+        $reservation->customer_id = 0;
+
+        if (
+            $customer->load(Yii::$app->request->post())
+            &&
+            $reservation->load(Yii::$app->request->post())
+            &&
+            $customer->validate()
+            &&
+            $reservation->validate()
+        ) {
+
+            $dbTrans = Yii::$app->db->beginTransaction();
+
+            $customerSaved = $customer->save();
+
+            if ($customerSaved) {
+                $reservation->customer_id = $customer->id;
+                $reservationSaved = $reservation->save();
+
+                if ($reservationSaved) {
+                    $dbTrans->commit();
+                } else {
+                    $dbTrans->rollback();
+                }
+            } else {
+                $dbTrans->rollback();
+            }
+        }
+
+
+        return $this->render('createCustomerAndReservation', ['customer' => $customer, 'reservation' => $reservation]);
+    }
+
+}
 }
