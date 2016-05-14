@@ -35,7 +35,7 @@ $roomsFilterData = yii\helpers\ArrayHelper::map( Room::find()->all(), 'id', func
             'header' => 'Room',
             'filter' => Html::activeDropDownList($searchModel, 'room_id', $roomsFilterData, ['prompt' => '--- all']),
             'content' => function($model) {
-                return $model->room->floor;
+                return $model->room->floor . "-" . $model->room->room_number;
             }
         ],
 
