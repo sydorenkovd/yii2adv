@@ -26,6 +26,6 @@ class JuiWidgetsController extends Controller
             $reservationUpdated = $reservation->save();
         }
 
-        return $this->render('datePicker', ['reservation' => $reservation, 'reservationUpdated' => $reservationUpdated]);
+        return $this->render('date-picker', ['reservation' => $reservation, 'reservationUpdated' => $reservationUpdated]);
     }
 }
