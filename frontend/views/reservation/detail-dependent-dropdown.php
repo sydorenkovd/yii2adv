@@ -48,7 +48,6 @@ EOT_JS
         ->dropDownList(ArrayHelper::map( $customers, 'id', 'nameAndSurname'), [ 'prompt' => '--- choose' ]) ?>
 
     <?php $reservations = Reservation::findAll(['customer_id' => $model->customer_id]);
-    print_r($model);
     ?>
     <?= $form->field($model, 'id')->label('Reservation ID')
         ->dropDownList(ArrayHelper::map( $reservations, 'id', function($temp, $defaultValue) {

@@ -37,7 +37,7 @@ class Reservation extends \yii\db\ActiveRecord
             [['room_id', 'customer_id', 'price_per_day', 'date_from', 'date_to'], 'required'],
             [['room_id', 'customer_id'], 'integer'],
             [['price_per_day'], 'number'],
-            [['date_from', 'date_to', 'reservation_date'], 'safe']
+            [['date_from', 'date_to', 'reservation_date', 'room_id', 'customer_id'], 'safe']
         ];
     }
 
