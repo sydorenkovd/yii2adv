@@ -2,6 +2,9 @@
 
 namespace frontend\controllers;
 
+use yii\data\ActiveDataProvider;
+use common\models\Customer;
+
 class CustomersController extends \yii\web\Controller
 {
     public function actionIndex()
