@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Customer;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -8,6 +9,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\base\InvalidParamException;
+use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -48,7 +50,15 @@ class SiteController extends Controller
             ],
         ];
     }
-
+public function actionActive(){
+    $data = new ActiveDataProvider([
+        'query' => Customer::find(),
+        'pagination' => [
+            'pageSize' => 20,
+        ],
+    ]);
+    return $this->render('active', ['data' => $data]);
+}
     /**
      * @inheritdoc
      */
