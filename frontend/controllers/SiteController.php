@@ -50,15 +50,7 @@ class SiteController extends Controller
             ],
         ];
     }
-public function actionActive(){
-    $data = new ActiveDataProvider([
-        'query' => Customer::find(),
-        'pagination' => [
-            'pageSize' => 20,
-        ],
-    ]);
-    return $this->render('active', ['data' => $data]);
-}
+
     /**
      * @inheritdoc
      */
