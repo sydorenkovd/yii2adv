@@ -47,7 +47,9 @@ class Customer extends \yii\db\ActiveRecord
             'phone_number' => 'Phone Number',
         ];
     }
-
+public function getNameAndSurname(){
+    return $this->name ." ". $this->surname;
+}
     /**
      * @return \yii\db\ActiveQuery
      */

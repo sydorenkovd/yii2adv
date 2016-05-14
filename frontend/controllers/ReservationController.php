@@ -148,7 +148,7 @@ class ReservationController extends Controller
         }
 
 
-        return $this->render('detailDependentDropdown', ['model' => $model, 'showDetail' => $showDetail]);
+        return $this->render('detail-dependent-dropdown', ['model' => $model, 'showDetail' => $showDetail]);
     }
 
     /*
