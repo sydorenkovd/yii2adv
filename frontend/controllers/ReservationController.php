@@ -49,7 +49,7 @@ class ReservationController extends Controller
                 'searchModel' => $searchModel,
                 'resultQueryAveragePricePerDay' => $resultQueryAveragePricePerDay ]);
     }
-    public function actionMultipleGrid()
+    public function actionMultiplegrid()
     {
         /**
          * Reservations
@@ -126,6 +126,9 @@ class ReservationController extends Controller
             'roomsDataProvider' => $roomsDataProvider, 'roomsSearchModel' => $roomsSearchModel,
         ]);
 
+    }
+    public function actionThreeColumns(){
+        return $this->render('three-columns');
     }
 
 }
