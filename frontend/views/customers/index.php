@@ -1,9 +1,31 @@
 <?php
-/* @var $this yii\web\View */
+use yii\grid\GridView;
+use yii\helpers\Html;
 ?>
-<h1>customers/index</h1>
 
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
-</p>
+    <h2>Customers</h2>
+
+<?= GridView::widget([
+    'dataProvider' => $dataProvider,
+    'columns' => [
+        'id',
+        'name',
+        'surname',
+        'phone_number',
+
+        [
+            'header' => 'Reservations',
+            'content' => function ($model, $key, $index, $column) {
+                $title = sprintf('Reservations (%d)', $model->reservationsCount);
+                return Html::a($title, ['reservations/index', 'Reservation[customer_id]' => $model->id]);
+            }
+        ],
+
+
+        [
+            'class' => 'yii\grid\ActionColumn',
+            'template' => '{delete}',
+            'header' => 'Actions',
+        ],
+    ],
+]) ?>
