@@ -14,6 +14,7 @@ class ReservationController extends Controller
 {
     public function actionIndex()
     {
+        if(Yii::$app->user->can('createReservation')){
         $query = Reservation::find();
 
         $searchModel = new ReservationSearch();
@@ -48,6 +49,11 @@ class ReservationController extends Controller
             ['dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'resultQueryAveragePricePerDay' => $resultQueryAveragePricePerDay]);
+    } else {
+            echo '<pre>';
+            print_r(Yii::$app->user);
+            echo '</pre>';
+        }
     }
 
     public function actionMultiplegrid()
