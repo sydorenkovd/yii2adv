@@ -12,7 +12,7 @@ use yii\web\Controller;
 
 class AuthController extends Controller
 {
-    public function actionInitializeAuthorizations()
+    public function actionInit()
     {
         $auth = Yii::$app->authManager;
 
