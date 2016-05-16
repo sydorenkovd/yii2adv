@@ -12,7 +12,7 @@ class AuthManagerController extends Controller
     public function initializeAuthorizations()
     {
         $auth = Yii::$app->authManager;
-        $auth->removeAll();
+//        $auth->removeAll();
         $permissions = [
             'createReservation' => array('desc' => 'Create a reservation'),
             'updateReservation' => array('desc' => 'Update reservation'),
@@ -63,6 +63,7 @@ class AuthManagerController extends Controller
         $r = $auth->createRole('admin');
         $r->description = 'admin';
         $auth->add($r);
+        $auth->assign($r, 1);
         foreach($permissions as $keyP=>$valueP)
         {
             if( false == $auth->hasChild($r, $auth->getPermission($permissionName))) $auth->addChild($r, $auth->getPermission($keyP));
@@ -75,7 +76,7 @@ class AuthManagerController extends Controller
         $auth = Yii::$app->authManager;
 
         // Initialize authorizations
-        $this->initializeAuthorizations();
+//        $this->initializeAuthorizations();
 
         // Get all users
         $users = User::find()->all();
