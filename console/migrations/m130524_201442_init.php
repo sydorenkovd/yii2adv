@@ -26,7 +26,6 @@ class m130524_201442_init extends Migration
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
     }
-
     public function down()
     {
         $this->dropTable('{{%user}}');

@@ -26,7 +26,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'index'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -37,6 +37,14 @@ class SiteController extends Controller
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'matchCallback' => function($rule, $action){
+                            return Yii::$app->user->identity->getId() === 1;
+                            // just a sample for configuring ACF only for me as admin
+                        }
                     ],
                 ],
             ],
@@ -72,7 +80,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+//        if(Yii::$app->user->can('admin')) {
+            return $this->render('index');
+//        } else {
+//            echo "Zero";
+//        }
     }
 
     /**
