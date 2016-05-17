@@ -42,8 +42,9 @@ class SiteController extends Controller
                         'actions' => ['index'],
                         'allow' => true,
                         'matchCallback' => function($rule, $action){
+                            if(Yii::$app->user->identity->id)
                             return Yii::$app->user->identity->getId() === 1;
-                            // just a sample for configuring ACF only for me as admin
+                            // just a sample for configuring ACF only for me as superadmin, first user
                         }
                     ],
                 ],
@@ -150,6 +151,7 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
+//        if(!Yii::$app->user->can('createReservation'))
         return $this->render('about');
     }
 

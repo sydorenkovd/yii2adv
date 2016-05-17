@@ -12,4 +12,7 @@ return [
         'role_updateCustomer',
         'role_deleteCustomer',
     ],
+    2 => [
+        'operator',
+    ],
 ];

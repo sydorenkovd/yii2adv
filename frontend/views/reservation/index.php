@@ -8,6 +8,10 @@ use frontend\components\GridViewReservation;
 <h2>Reservations</h2>
 
 <?php
+$this->title = "Reservations";
+//$this->params['breadcrumbs'][] = ['label' => 'create', 'url' => ['create']];
+$this->params['breadcrumbs'][] = "Reservation";
+
 $sumOfPricesPerDay = 0;
 $averagePricePerDay = 0;
 
