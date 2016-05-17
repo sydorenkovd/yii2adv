@@ -106,6 +106,7 @@ return [
             'createReservation',
             'createRoom',
             'createCustomer',
+            'updateOwnReservation',
         ],
     ],
     'admin' => [
@@ -119,6 +120,14 @@ return [
             'updateRoom',
             'deleteRoom',
             'createCustomer',
+        ],
+    ],
+    'updateOwnReservation' => [
+        'type' => 2,
+        'description' => 'Update own reservation',
+        'ruleName' => 'isAuthor',
+        'children' => [
+            'updateReservation',
         ],
     ],
 ];

@@ -9,6 +9,7 @@
 namespace frontend\controllers;
 use Yii;
 use yii\web\Controller;
+use frontend\rbac\AuthorRule;
 
 class AuthController extends Controller
 {
@@ -45,5 +46,24 @@ class AuthController extends Controller
         // usually implemented in your User model.
         $auth->assign($roleOperator, 2);
         $auth->assign($roleAdmin, 1);
+    }
+    public function actionUor(){
+        $auth = Yii::$app->authManager;
+
+// add the rule
+        $rule = new AuthorRule;
+        $auth->add($rule);
+
+// add the "updateOwnPost" permission and associate the rule with it.
+        $updateOwnReservation = $auth->createPermission('updateOwnReservation');
+        $updateOwnReservation->description = 'Update own reservation';
+        $updateOwnReservation->ruleName = $rule->name;
+        $auth->add($updateOwnReservation);
+$updateReservation = $auth->getPermission('updateReservation');
+// "updateOwnPost" will be used from "updatePost"
+        $auth->addChild($updateOwnReservation, $updateReservation);
+$author = $auth->getRole('operator');
+// allow "author" to update their own posts
+        $auth->addChild($author, $updateOwnReservation);
     }
 }
