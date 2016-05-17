@@ -179,7 +179,17 @@ class ReservationController extends Controller
         return $this->render('detailPjax', [ 'model' => $model, 'showDetail' => $showDetail ]);
     }
     */
-
+    public function actionCreate()
+    {
+        $model = new Reservation();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                   return $this->redirect(['view', 'id' => $model->id]);
+               } else {
+                   return $this->render('create', [
+                       'model' => $model,
+                   ]);
+               }
+    }
     public function actionAjaxDropDownListByCustomerId($customer_id)
     {
         $output = '';

@@ -120,6 +120,7 @@ return [
             'updateRoom',
             'deleteRoom',
             'createCustomer',
+            'updateOwnReservation',
         ],
     ],
     'updateOwnReservation' => [
