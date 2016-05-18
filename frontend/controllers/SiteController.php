@@ -151,6 +151,7 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
+        echo phpinfo(1);
 //        if(!Yii::$app->user->can('createReservation'))
         return $this->render('about');
     }
