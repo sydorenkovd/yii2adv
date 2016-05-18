@@ -224,4 +224,31 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+    public function actionTranslate()
+    {
+        \Yii::$app->language = 'en-US';
+        $englishText = \Yii::t('app', 'Hello World!');
+
+        \Yii::$app->language = 'it-IT';
+        $italianText = \Yii::t('app', 'Hello World!');
+        \Yii::$app->language = 'ru-RU';
+        $russianText = \Yii::t('app', 'Hello World!');
+
+        return $this->render('translate', ['englishText' => $englishText, 'italianText' => $italianText, 'russianText' => $russianText]);
+    }
+
+    public function actionHelloWorldWithName($name='')
+    {
+        $text = \Yii::t('app', 'Hello World! I\'m {name}', ['name' => $name]);
+
+        return $this->render('helloWorldWithName', ['text' => $text]);
+    }
+
+    public function actionHelloWorldFromDatabase()
+    {
+        \Yii::$app->language = 'it';
+        $text = \Yii::t('app', 'Hello World from Database!');
+
+        return $this->render('helloWorldFromDatabase', ['text' => $text]);
+    }
 }

@@ -55,7 +55,13 @@ AppAsset::register($this);
     ]);
     NavBar::end();
     ?>
-
+<div class="languages">
+<?php
+//foreach(Yii::$app->params['languages'] as $k => $lang){
+//    echo '<span class="language" id ="'.$k.'">'.$lang.'| </span>';
+//}
+//?>
+</div>
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
