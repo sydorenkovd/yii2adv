@@ -9,7 +9,10 @@ body {
     margin: 0 auto -60px;
     padding: 0 0 60px;
 }
-
+.my_last_class{
+    font-size: 28px;
+    background-color: #00aa00;
+}
 .wrap > .container {
     padding: 70px 15px 20px;
 }
